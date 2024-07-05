@@ -1,19 +1,63 @@
-export const App = () => {
+import React, { lazy, Suspense } from 'react';
+import { Routes, Route, Navigate, Link } from 'react-router-dom';
+import styled from 'styled-components';
+
+const Header = styled.header`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 20px;
+  background-color: #333;
+  color: white;
+`;
+
+const Nav = styled.nav`
+  display: flex;
+  gap: 20px;
+
+  a {
+    color: white;
+    text-decoration: none;
+  }
+`;
+
+const Container = styled.div`
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+`;
+
+const Home = lazy(() => import('./home/home'));
+const Movies = lazy(() => import('./movies/movies'));
+const MovieDetails = lazy(() => import('./movieDetails/movieDetails'));
+const Cast = lazy(() => import('./cast/cast'));
+const Reviews = lazy(() => import('./reviews/reviews'));
+
+const App = () => {
   return (
-    <div
-      style={{
-        height: '100vh',
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-        fontSize: 40,
-        color: '#010101'
-      }}
-    >
-      React homework template-movies
-      APIkey=d89da14cf20732d29d9230587b122e3f
-      API read access oken= eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJkODlkYTE0Y2YyMDczMmQyOWQ5MjMwNTg3YjEyMmUzZiIsIm5iZiI6MTcxOTk3NTA0Ni4zMTI2LCJzdWIiOiI2Njg0YmI1ZjQxMWJlYzMxMTE3NWU3MjYiLCJzY29wZXMiOlsiYXBpX3JlYWQiXSwidmVyc2lvbiI6MX0.TD2KzKsEk9ZAiAd8kPmYEEHHcbAtcW2LtT0KjtEzMDA
-      
-    </div>
+    <>
+      <Header>
+        <h1>Movies App</h1>
+        <Nav>
+          <Link to="/">Home</Link>
+          <Link to="/movies">Movies</Link>
+        </Nav>
+      </Header>
+      <Suspense fallback={<div>Loading...</div>}>
+        <Container>
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/movies" element={<Movies />} />
+            <Route path="/movies/:movieId" element={<MovieDetails />}>
+              <Route path="cast" element={<Cast />} />
+              <Route path="reviews" element={<Reviews />} />
+            </Route>
+            <Route path="*" element={<Navigate to="/" />} />
+          </Routes>
+        </Container>
+      </Suspense>
+    </>
   );
 };
+
+export default App;

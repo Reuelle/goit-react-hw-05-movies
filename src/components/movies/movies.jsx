@@ -7,6 +7,49 @@ const MoviesWrapper = styled.div`
   padding: 20px;
 `;
 
+const CenteredWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 20px;
+
+  h1 {
+    font-size: 44px;
+    margin-bottom: 20px;
+    text-align: center;
+  }
+`;
+
+const SearchWrapper = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 20px;
+
+  input {
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-right: 10px;
+  }
+
+  button {
+    padding: 10px 20px;
+    font-size: 16px;
+    background-color: #06457F;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+
+    &:hover {
+      background-color: #5292CE;
+    }
+  }
+`;
+
 const MovieItem = styled.li`
   font-size: 18px;
   margin-bottom: 20px;
@@ -65,13 +108,17 @@ const Movies = () => {
 
   return (
     <MoviesWrapper>
-      <h1>Search Movies</h1>
-      <input
-        type="text"
-        value={searchTerm}
-        onChange={e => setSearchTerm(e.target.value)}
-      />
-      <button onClick={handleSearch}>Search</button>
+      <CenteredWrapper>
+        <h1>Search Movies</h1>
+        <SearchWrapper>
+          <input
+            type="text"
+            value={searchTerm}
+            onChange={e => setSearchTerm(e.target.value)}
+          />
+          <button onClick={handleSearch}>Search</button>
+        </SearchWrapper>
+      </CenteredWrapper>
       <ul>
         {searchResults.map(movie => (
           <MovieItem key={movie.id}>
