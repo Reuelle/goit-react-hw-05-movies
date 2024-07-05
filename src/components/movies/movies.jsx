@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
@@ -17,6 +17,7 @@ const CenteredWrapper = styled.div`
     font-size: 44px;
     margin-bottom: 20px;
     text-align: center;
+    color: #06457F;
   }
 `;
 
@@ -77,6 +78,15 @@ const MovieItem = styled.li`
     display: block;
   }
 
+  .title {
+    font-weight: bold;
+  }
+
+  .genre {
+    font-style: italic;
+    color: #777;
+  }
+
   span {
     display: block;
     white-space: nowrap;
@@ -88,6 +98,23 @@ const MovieItem = styled.li`
 const Movies = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [searchResults, setSearchResults] = useState([]);
+  const [genres, setGenres] = useState([]);
+
+  useEffect(() => {
+    // Fetch genres
+    axios
+      .get('https://api.themoviedb.org/3/genre/movie/list', {
+        params: {
+          api_key: '23f77f1a7852117720a48008d2ea32a0',
+        },
+      })
+      .then(response => {
+        setGenres(response.data.genres);
+      })
+      .catch(error => {
+        console.error('Error fetching genres:', error);
+      });
+  }, []);
 
   const handleSearch = async () => {
     try {
@@ -104,6 +131,16 @@ const Movies = () => {
     } catch (error) {
       console.error('Error searching movies:', error);
     }
+  };
+
+  const getGenreNames = genreIds => {
+    return genreIds
+      .map(genreId => {
+        const genre = genres.find(g => g.id === genreId);
+        return genre ? genre.name : '';
+      })
+      .filter(Boolean) // Remove any empty strings
+      .join(', ');
   };
 
   return (
@@ -131,7 +168,8 @@ const Movies = () => {
                 }
                 alt={movie.title}
               />
-              <span>{movie.title}</span>
+              <span className="title">{movie.title}</span>
+              <span className="genre">{getGenreNames(movie.genre_ids)}</span>
             </Link>
           </MovieItem>
         ))}

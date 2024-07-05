@@ -6,8 +6,8 @@ const Header = styled.header`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 10px 20px;
-  background-color: #333;
+  padding: 5px 50px;
+  background-color: #06457F;
   color: white;
 `;
 

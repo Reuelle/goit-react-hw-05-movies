@@ -10,6 +10,7 @@ const HomeWrapper = styled.div`
     font-size: 24px;
     margin-bottom: 10px;
     color: #333;
+    text-align: center; /* Center the h1 element */
   }
 
   ul {
@@ -53,13 +54,38 @@ const HomeWrapper = styled.div`
       overflow: hidden;
       text-overflow: ellipsis;
     }
+
+    .title {
+      font-weight: bold;
+    }
+
+    .genre {
+      font-style: italic;
+      color: #777;
+    }
   }
 `;
 
 const Home = () => {
   const [popularMovies, setPopularMovies] = useState([]);
+  const [genres, setGenres] = useState([]);
 
   useEffect(() => {
+    // Fetch genres
+    axios
+      .get('https://api.themoviedb.org/3/genre/movie/list', {
+        params: {
+          api_key: '23f77f1a7852117720a48008d2ea32a0',
+        },
+      })
+      .then(response => {
+        setGenres(response.data.genres);
+      })
+      .catch(error => {
+        console.error('Error fetching genres:', error);
+      });
+
+    // Fetch popular movies
     axios
       .get('https://api.themoviedb.org/3/trending/all/day', {
         params: {
@@ -78,6 +104,16 @@ const Home = () => {
       });
   }, []);
 
+  const getGenreNames = genreIds => {
+    return genreIds
+      .map(genreId => {
+        const genre = genres.find(g => g.id === genreId);
+        return genre ? genre.name : '';
+      })
+      .filter(Boolean) // Remove any empty strings
+      .join(', ');
+  };
+
   return (
     <HomeWrapper>
       <h1>Popular Movies</h1>
@@ -86,7 +122,8 @@ const Home = () => {
           <li key={movie.id}>
             <Link to={`/movies/${movie.id}`}>
               <img src={movie.fullPosterPath} alt={movie.title} />
-              <span>{movie.title}</span>
+              <span className="title">{movie.title}</span>
+              <span className="genre">{getGenreNames(movie.genre_ids)}</span>
             </Link>
           </li>
         ))}
