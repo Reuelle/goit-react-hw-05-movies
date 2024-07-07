@@ -7,7 +7,7 @@ const HomeWrapper = styled.div`
   padding: 20px;
 
   h1 {
-    font-size: 24px;
+    font-size: 23px;
     margin-bottom: 10px;
     color: #333;
     text-align: center; /* Center the h1 element */
@@ -29,7 +29,7 @@ const HomeWrapper = styled.div`
     transition: transform 0.3s ease;
 
     &:hover {
-      transform: scale(1.05);
+      transform: scale(1.07);
     }
 
     a {
