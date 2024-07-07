@@ -51,6 +51,14 @@ const SearchWrapper = styled.div`
   }
 `;
 
+const MoviesList = styled.ul`
+  list-style: none;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+`;
+
 const MovieItem = styled.li`
   font-size: 18px;
   margin-bottom: 20px;
@@ -63,7 +71,7 @@ const MovieItem = styled.li`
   }
 
   a {
-    text-decoration: none;
+    text-decoration: none; /* Ensure text-decoration is set to none */
     color: #333;
     display: block;
     text-align: center;
@@ -156,7 +164,7 @@ const Movies = () => {
           <button onClick={handleSearch}>Search</button>
         </SearchWrapper>
       </CenteredWrapper>
-      <ul>
+      <MoviesList>
         {searchResults.map(movie => (
           <MovieItem key={movie.id}>
             <Link to={`/movies/${movie.id}`}>
@@ -173,7 +181,7 @@ const Movies = () => {
             </Link>
           </MovieItem>
         ))}
-      </ul>
+      </MoviesList>
     </MoviesWrapper>
   );
 };
