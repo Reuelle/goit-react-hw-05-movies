@@ -76,11 +76,11 @@ const MovieItem = styled.li`
     border-radius: 5px;
     margin-bottom: 10px;
     display: block;
-    text-decoration: none;
   }
 
   .title {
     font-weight: bold;
+    text-decoration: none;
   }
 
   .genre {
