@@ -67,7 +67,6 @@ const MovieItem = styled.li`
     color: #333;
     display: block;
     text-align: center;
-     text-decoration: none;
   }
 
   img {
@@ -93,7 +92,6 @@ const MovieItem = styled.li`
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-     text-decoration: none;
   }
 `;
 
